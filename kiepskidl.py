@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from urllib.error import HTTPError
+from os.path import exists
+from os import rename,remove
 from sys import exit
 import wget
-import sys
+# import sys
 
 with open("urls.txt") as linki_f: linki = linki_f.read().splitlines()
 with open("titles.txt") as nazwy_f: nazwy = nazwy_f.read().splitlines()
@@ -17,8 +19,19 @@ if not do_pobrania: do_pobrania = range(1, len(linki)-1)
 
 for i in do_pobrania:
     try:
-    	print("Pobieram odcinek " + str(i) + "...")
-    	wget.download(linki[i-1], nazwy[i-1] + ".mp4")
+    	curr_epis = nazwy[i-1] + ".mp4"
+    	curr_epis_temp = curr_epis + ".part"
+    	# wget.download(linki[i-1], nazwy[i-1] + ".mp4")
+    	if exists(curr_epis_temp):
+    		print("Próbowano poprzednio pobrać " + str(i) + ", usuwam")
+    		os.remove(curr_epis_temp)
+    	if exists(curr_epis):
+    		print("Odcinek " + str(i) + " został już pobrany, pomijam...")
+    	else:
+    		print("Pobieram odcinek " + str(i) + "...")
+    		wget.download(linki[i-1], curr_epis_temp)
+    		os.rename(curr_epis_temp, curr_epis)
+    		
     except HTTPError:
         print("Nie można pobrać odcinka " + str(i))
         continue
