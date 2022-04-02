@@ -7,7 +7,9 @@ import sys
 
 with open("urls.txt") as linki_f: linki = linki_f.read().splitlines()
 with open("titles.txt") as nazwy_f: nazwy = nazwy_f.read().splitlines()
-if (len(linki) != len(nazwy)): print("List ranges mismatch! Aborting...")
+if (len(linki) != len(nazwy)):
+	print("List ranges mismatch! Aborting...")
+	exit()
 
 do_pobrania = [int(i) for i in sys.argv[1:]]
 if not do_pobrania: do_pobrania = range(1, len(linki)-1)
