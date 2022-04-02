@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from urllib.error import HTTPError
+from sys import exit
 import wget
 import sys
 
