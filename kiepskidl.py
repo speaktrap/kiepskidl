@@ -14,10 +14,11 @@ if (len(linki) != len(nazwy)):
 	print("List ranges mismatch! Aborting...")
 	exit()
 
-do_pobrania = [int(i) for i in sys.argv[1:]]
+do_pobrania = [int(i) if i.isnumeric() for i in sys.argv[1:]]
 if not do_pobrania: do_pobrania = range(1, len(linki)-1)
 
 for i in do_pobrania:
+    # if !i.isnumeric(): continue
     try:
     	curr_epis = nazwy[i-1] + ".mp4"
     	curr_epis_temp = curr_epis + ".part"
